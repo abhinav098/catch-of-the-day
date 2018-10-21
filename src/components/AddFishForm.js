@@ -1,11 +1,38 @@
 import React from "react";
 
 class AddFishForm extends React.Component{
+  nameRef = React.createRef();
+  priceRef = React.createRef();
+  statusRef = React.createRef();
+  descRef = React.createRef();
+  imageRef = React.createRef();
+
+  createFish = (event) => {
+    event.preventDefault();
+    const fish = {
+      name: this.nameRef.current.value,
+      price: parseFloat(this.priceRef.current.value),
+      status:this.statusRef.current.value,
+      desc: this.descRef.current.value,
+      image: this.imageRef.current.value
+    }
+    this.props.addFish(fish);
+    // refresh the form
+    event.currentTarget.reset();
+  }
+
   render(){
     return (
-        <form>
-          <label></label>
-          <input type="text" placeholder="Name"></input>
+        <form className="fish-edit" onSubmit={this.createFish}>
+          <input type="text" placeholder="Name" name="name" ref={this.nameRef}/>
+          <input type="text" placeholder="Price" name="price"  ref={this.priceRef}/>
+          <select type="text" placeholder="Status" name="status" ref={this.statusRef}>
+            <option value="available">Fresh</option>
+            <option value="unavailable">SoldOut</option>
+          </select>
+          <textarea type="text-area" placeholder="Description" name="desc"  ref={this.descRef}/>
+          <input type="text" placeholder="Image" name="image"  ref={this.imageRef}/>
+          <button type="submit"> Add Fish</button>
         </form>
       );
   };
